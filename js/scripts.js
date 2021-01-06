@@ -265,7 +265,7 @@ $(document).ready(function () {
             //console.log("Data a enviar: "+data);
             //$('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
             var invite_code = $('#invite_code').val()
-            $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?invite_code='+invite_code)
+            $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
                 .done(function (data) {
                     console.log("Data recibida: "+data);
                     if (data.result === "Error") {
