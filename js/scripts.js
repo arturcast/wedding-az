@@ -272,7 +272,12 @@ $(document).ready(function () {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
                         $('#gran_contenedor').show()
-                        $('#name').val(data.name)
+                        $('#cupos').show()
+                        $('#fname').val(data.name)
+                        $('#femail').val(data.email)
+                        $('#fnumber').val(data.number)
+                        $('#fcupos').val(data.cupos)
+                        $('#flinea').val(data.linea)
                     }
                 })
                 .fail(function (data) {
@@ -302,9 +307,11 @@ $( "select" )
         $('#invite_code').hide()
         $('#gran_contenedor').show()
         $('#cupos').hide()
+        $('#linea').hide()
     }else{
         $('#invite_code').hide()
-        $('#gran_contenedor').hide() 
+        $('#gran_contenedor').hide()
+        $('#linea').hide()
     }
   })
   .change();
