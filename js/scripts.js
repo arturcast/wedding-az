@@ -209,7 +209,10 @@ $(document).ready(function () {
 
     
     /********************** RSVP **********************/
-    
+    $.ajaxSetup({
+        crossDomain: true
+    });
+
     $('#rsvp-form button').click( function (e) {
         console.log($(this).attr("value"))
         e.preventDefault();
