@@ -1,6 +1,35 @@
 $(document).ready(function () {
-    $("#rsvp-form").validate();
     $('#intro-modal').appendTo("body").modal('show');
+
+    $("#rsvp-form").validate(
+        {
+            rules: {
+                name : {
+                    required: true,
+                    minlength: 5
+                  },
+                email: {
+                    required: true,
+                    minlength: 10,
+                    email: true
+                  },
+                number: {
+                    required: true,
+                    number: true,
+                    min: 10
+                  },
+            },
+            messages: {
+                name: "Por favor digite nombre completo.",
+                email: "Digite un email valido."
+
+            },
+            submitHandler: function(form) {
+                $(form).ajaxSubmit();
+            }
+        }
+    );
+    
     /***************** Waypoints ******************/
 
     $('.wp1').waypoint(function () {
@@ -185,23 +214,23 @@ $(document).ready(function () {
         },
         data: {
             // Event title
-            title: "Ram and Antara's Wedding",
+            title: "Boda de Arturo y Zully",
 
             // Event start date
-            start: new Date('Nov 27, 2017 10:00'),
+            start: new Date('Feb 20, 2021 19:00'),
 
             // Event duration (IN MINUTES)
             // duration: 120,
 
             // You can also choose to set an end time
             // If an end time is set, this will take precedence over duration
-            end: new Date('Nov 29, 2017 00:00'),
+            end: new Date('Feb 21, 2021 02:00'),
 
             // Event Address
-            address: 'ITC Fortune Park Hotel, Kolkata',
+            address: 'Parroquia Santa Teresita del niño Jesus',
 
             // Event Description
-            description: "We can't wait to see you on our big day. For any queries or issues, please contact Mr. Amit Roy at +91 9876543210."
+            description: "No podemos esperar a verte en nuestro gran día. Para cualquier pregunta o inquietud, por favor contacta con los novios."
         }
     });
 
