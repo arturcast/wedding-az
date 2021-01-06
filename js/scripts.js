@@ -217,7 +217,7 @@ $(document).ready(function () {
 
         if ($(this).attr("value") == "enviar") { 
             console.log("Data a enviar: "+data);
-            $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
+            $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
             $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
                 .done(function (data) {
                     console.log("Data recibida: "+data);
@@ -237,7 +237,7 @@ $(document).ready(function () {
 
         if ($(this).attr("value") == "buscar") { 
             //console.log("Data a enviar: "+data);
-            //$('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
+            $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
             var invite_code = $('#code').val()
             $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
                 .done(function (data) {
@@ -257,6 +257,10 @@ $(document).ready(function () {
                         $('#fnumber').val(data.number)
                         $('#fcupos').val(data.cupos)
                         $('#flinea').val(data.linea)
+                        $('#fcupos').attr({
+                            "max" : data.cupos,        
+                            "min" : 1
+                         });
                     }
                 })
                 .fail(function (data) {
