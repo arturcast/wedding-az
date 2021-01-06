@@ -237,12 +237,12 @@ $(document).ready(function () {
         }
     });*/
 
-    $('#rsvp-form').on('submit', function (e) {
-
+    $('#rsvp-form button').click( function (e) {
+        console.log($(this).attr("value"))
         e.preventDefault();
         var data = $(this).serialize();
         if ($(this).attr("value") == "enviar") { 
-
+            console.log("aquí 2")
             $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
             $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
                 .done(function (data) {
@@ -258,7 +258,7 @@ $(document).ready(function () {
                     console.log(data);
                     $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
                 });
-                
+
         }
 
     });
