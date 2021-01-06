@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#gran_contenedor').hide()
+//    $('#gran_contenedor').hide()
     $('#invite_code').hide() 
     /***************** Waypoints ******************/
 
@@ -209,34 +209,7 @@ $(document).ready(function () {
 
     
     /********************** RSVP **********************/
-    /*
-    $('#rsvp-form').on('submit', function (e) {
-        e.preventDefault();
-        var data = $(this).serialize();
-
-        $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
-
-        if (MD5($('#invite_code').val()) !== 'b0e53b10c1f55ede516b240036b88f40'
-            && MD5($('#invite_code').val()) !== '2ac7f43695eb0479d5846bb38eec59cc') {
-            $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
-        } else {
-            $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
-                .done(function (data) {
-                    console.log(data);
-                    if (data.result === "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#rsvp-modal').modal('show');
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
-                });
-        }
-    });*/
-
+    
     $('#rsvp-form button').click( function (e) {
         console.log($(this).attr("value"))
         e.preventDefault();
@@ -248,7 +221,7 @@ $(document).ready(function () {
             $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
                 .done(function (data) {
                     console.log("Data recibida: "+data);
-                    if (data.result === "Error") {
+                    if (data.result == "error") {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
                         $('#alert-wrapper').html('');
@@ -261,6 +234,7 @@ $(document).ready(function () {
                 });
 
         }
+
         if ($(this).attr("value") == "buscar") { 
             //console.log("Data a enviar: "+data);
             //$('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
@@ -268,11 +242,16 @@ $(document).ready(function () {
             $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
                 .done(function (data) {
                     console.log("Data recibida: "+data);
-                    if (data.result === "Error") {
+                    if (data.result == "error") {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
-                        $('#gran_contenedor').show()
+                        //$('#gran_contenedor').show()
+                        $('#name').show()
+                        $('#email').show()
+                        $('#number').show()
                         $('#cupos').show()
+                        $('#enviar').show()
+                        $('#linea').hide()
                         $('#fname').val(data.name)
                         $('#femail').val(data.email)
                         $('#fnumber').val(data.number)
@@ -302,16 +281,49 @@ $( "select" )
     });
     if(str == "Presencial"){
         $('#invite_code').show()
-        $('#gran_contenedor').hide()
-    }else if(str == "Virtual"){
-        $('#invite_code').hide()
-        $('#gran_contenedor').show()
+        //$('#gran_contenedor').hide()
+        $('#name').hide()
+        $('#email').hide()
+        $('#number').hide()
         $('#cupos').hide()
         $('#linea').hide()
+        $('#enviar').hide()
+        $('#fname').val($(this).attr('placeholder'))
+        $('#femail').val($(this).attr('placeholder'))
+        $('#fnumber').val($(this).attr('placeholder'))
+        $('#fcupos').val($(this).attr('placeholder'))
+        $('#flinea').val($(this).attr('placeholder'))
+        $('#code').val($(this).attr('placeholder'))
+    }else if(str == "Virtual"){
+        $('#invite_code').hide()
+        //$('#gran_contenedor').show()
+        $('#cupos').hide()
+        $('#linea').hide()
+        $('#name').show()
+        $('#email').show()
+        $('#number').show()
+        $('#enviar').show()
+        $('#fname').val($(this).attr('placeholder'))
+        $('#femail').val($(this).attr('placeholder'))
+        $('#fnumber').val($(this).attr('placeholder'))
+        $('#fcupos').val($(this).attr('placeholder'))
+        $('#flinea').val($(this).attr('placeholder'))
+        $('#code').val($(this).attr('placeholder'))
     }else{
         $('#invite_code').hide()
-        $('#gran_contenedor').hide()
+        //$('#gran_contenedor').hide()
+        $('#name').hide()
+        $('#email').hide()
+        $('#number').hide()
+        $('#cupos').hide()
         $('#linea').hide()
+        $('#enviar').hide()
+        $('#fname').val($(this).attr('placeholder'))
+        $('#femail').val($(this).attr('placeholder'))
+        $('#fnumber').val($(this).attr('placeholder'))
+        $('#fcupos').val($(this).attr('placeholder'))
+        $('#flinea').val($(this).attr('placeholder'))
+        $('#code').val($(this).attr('placeholder'))
     }
   })
   .change();
