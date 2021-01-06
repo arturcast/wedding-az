@@ -240,7 +240,7 @@ $(document).ready(function () {
     $('#rsvp-form button').click( function (e) {
         console.log($(this).attr("value"))
         e.preventDefault();
-        var data = $(this).serialize();
+        var data = $('#rsvp-form').serialize();
         if ($(this).attr("value") == "enviar") { 
             console.log("Data a enviar: "+data);
             $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
