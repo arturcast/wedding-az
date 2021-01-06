@@ -377,6 +377,33 @@
                       action=""
                       method="POST">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-input-group">
+                                <select class="custom-select form-input-group" id="tipo_invitacion" name="invitacion">
+                                    <option selected>Tipo de Asistencia</option>
+                                    <option value="Virtual">Virtual</option>
+                                    <option value="Presencial">Presencial</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="invite_code">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-input-group">
+                                <i class="fa fa-key"></i><input type="number" name="invite_code"
+                                                                class="" min="0"
+                                                                placeholder="Código de Invitación"
+                                                                required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <button class="btn-fill rsvp-btn">
+                                Buscame!
+                            </button>
+                        </div>
+                    </div>
+                    <div id="gran_contenedor">
+                    <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-input-group">
                                 <i class="fa fa-user"></i><input name="name" class=""
@@ -401,32 +428,21 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <div class="form-input-group">
-                                <select class="custom-select form-input-group" name="invitacion">
-                                    <option selected>Tipo de Asistencia</option>
-                                    <option value="Virtual">Virtual</option>
-                                    <option value="Presencial">Presencial</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-input-group">
-                                <i class="fa fa-key"></i><input type="number" name="invite_code" id="invite_code"
-                                                                class="" min="0"
-                                                                placeholder="Código de Invitación Presencial"
-                                                                required>
+                            <div class="form-input-group" id="cupos">
+                                <i class="fa fa-phone"></i><input type="cupos" name="cupos" class="" min="0"
+                                                                  max="5"
+                                                                  required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12" id="alert-wrapper"></div>
                     </div>
-                    <button class="btn-fill rsvp-btn">
+                    <button class="btn-fill rsvp-btn" id="enviar">
                         Si,
                         Soy yo!
                     </button>
+                </div>
                 </form>
             </div>
         </div>

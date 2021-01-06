@@ -1,5 +1,6 @@
 $(document).ready(function () {
-
+    $('#gran_contenedor').hide()
+    $('#invite_code').hide() 
     /***************** Waypoints ******************/
 
     $('.wp1').waypoint(function () {
@@ -235,12 +236,56 @@ $(document).ready(function () {
         }
     });
 
+    $('#enviar').on('submit', function (e) {
+
+        e.preventDefault();
+        var data = $(this).serialize();
+
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
+
+        
+        $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
+            .done(function (data) {
+                console.log(data);
+                if (data.result === "error") {
+                    $('#alert-wrapper').html(alert_markup('danger', data.message));
+                } else {
+                    $('#alert-wrapper').html('');
+                    $('#rsvp-modal').modal('show');
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+            });
+
+    });
+
 });
 
 /********************** Extras **********************/
 
-// Google map
+$( "select" )
+  .change(function () {
+    var str = "";
+    $( "select option:selected" ).each(function() {
+      str += $( this ).text();
+    });
+    if(str == "Presencial"){
+        $('#invite_code').show()
+        $('#gran_contenedor').hide()
+    }else if(str == "Virtual"){
+        $('#invite_code').hide()
+        $('#gran_contenedor').show()
+        $('#cupos').hide()
+    }else{
+        $('#invite_code').hide()
+        $('#gran_contenedor').hide() 
+    }
+  })
+  .change();
 
+// Google map
 
 function initMap() {
 
