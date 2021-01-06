@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#basic-form").validate();
+    $("#rsvp-form").validate();
     $('#intro-modal').appendTo("body").modal('show');
     /***************** Waypoints ******************/
 
