@@ -1,5 +1,5 @@
 $(document).ready(function () {
-//    $('#gran_contenedor').hide()
+    $("#basic-form").validate();
     $('#intro-modal').appendTo("body").modal('show');
     /***************** Waypoints ******************/
 
