@@ -1,6 +1,6 @@
 $(document).ready(function () {
 //    $('#gran_contenedor').hide()
-    $('#invite_code').hide() 
+    $('#intro-modal').appendTo("body").modal('show');
     /***************** Waypoints ******************/
 
     $('.wp1').waypoint(function () {
