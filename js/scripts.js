@@ -245,7 +245,7 @@ $(document).ready(function () {
                     if (data.result == "error") {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
-                        //$('#gran_contenedor').show()
+                        $('#alert-wrapper').html('');
                         $('#name').show()
                         $('#email').show()
                         $('#number').show()
@@ -265,7 +265,7 @@ $(document).ready(function () {
                 })
                 .fail(function (data) {
                     console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> estamos presentando problemas con el servidor. '));
                 });
 
         }
