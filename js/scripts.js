@@ -242,11 +242,11 @@ $(document).ready(function () {
         e.preventDefault();
         var data = $(this).serialize();
         if ($(this).attr("value") == "enviar") { 
-            console.log("aquí 2")
+            console.log("Data a enviar: "+data);
             $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
             $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
                 .done(function (data) {
-                    console.log(data);
+                    console.log("Data recibida: "+data.result);
                     if (data.result === "Error") {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
