@@ -241,12 +241,13 @@ $(document).ready(function () {
         console.log($(this).attr("value"))
         e.preventDefault();
         var data = $('#rsvp-form').serialize();
+
         if ($(this).attr("value") == "enviar") { 
             console.log("Data a enviar: "+data);
             $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
             $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
                 .done(function (data) {
-                    console.log("Data recibida: "+data.result);
+                    console.log("Data recibida: "+data);
                     if (data.result === "Error") {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
@@ -260,6 +261,27 @@ $(document).ready(function () {
                 });
 
         }
+        if ($(this).attr("value") == "buscar") { 
+            //console.log("Data a enviar: "+data);
+            //$('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
+            var invite_code = $('#invite_code').val()
+            $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?invite_code='+invite_code)
+                .done(function (data) {
+                    console.log("Data recibida: "+data);
+                    if (data.result === "Error") {
+                        $('#alert-wrapper').html(alert_markup('danger', data.message));
+                    } else {
+                        $('#gran_contenedor').show()
+                        $('#name').val(data.data['name'])
+                    }
+                })
+                .fail(function (data) {
+                    console.log(data);
+                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+                });
+
+        }
+
 
     });
 
