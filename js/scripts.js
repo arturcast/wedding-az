@@ -272,7 +272,7 @@ $(document).ready(function () {
                         $('#alert-wrapper').html(alert_markup('danger', data.message));
                     } else {
                         $('#gran_contenedor').show()
-                        $('#name').val(data.data['name'])
+                        $('#name').val(data.name)
                     }
                 })
                 .fail(function (data) {
