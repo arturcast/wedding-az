@@ -215,7 +215,8 @@ $(document).ready(function () {
 
     //$('#rsvp-form button').click();
 
-    $("#rsvp-form").submit(function(event) {
+    $("#rsvp-form").submit(function(e) {
+        e.preventDefault();
         $("#rsvp-form").validate(
             {
                 rules: {
@@ -239,7 +240,7 @@ $(document).ready(function () {
                     email: "Digite un email valido."
     
                 },
-                submitHandler/*function(form) {
+                submitHandler: submitHandler/*function(form) {
                     $(form).ajaxSubmit();
                 }*/
             }
@@ -251,7 +252,6 @@ $(document).ready(function () {
 /***************** FORM SUBMITION ******************/
 function submitHandler(e) {
     console.log($(this).attr("value"))
-    e.preventDefault();
     var data = $('#rsvp-form').serialize();
 
     if ($(this).attr("value") == "enviar") { 
