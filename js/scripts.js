@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    $('button[value="enviar"]').click(function() {
+        $('#hiddenAction').val('enviar');
+    });
+
+    $('button[value="buscar"]').click(function() {
+        $('#hiddenAction').val('buscar');
+    });
+
     $('#intro-modal').appendTo("body").modal('show');
     
     /***************** Waypoints ******************/
@@ -292,7 +300,7 @@ function submitHandler(e) {
     console.log($(e).attr("value"))
     var data = $('#rsvp-form').serialize();
 
-    if ($(e).attr("value") == "enviar") { 
+    if ($("#hiddenAction").val() == "enviar") { 
         console.log("Data a enviar: "+data);
         $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
         $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
@@ -312,7 +320,7 @@ function submitHandler(e) {
 
     }
 
-    if ($(e).attr("value") == "buscar") { 
+    if ($("#hiddenAction").val() == "buscar") { 
         //console.log("Data a enviar: "+data);
         $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
         var invite_code = $('#code').val()
