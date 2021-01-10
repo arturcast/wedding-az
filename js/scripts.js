@@ -209,45 +209,84 @@ $(document).ready(function () {
 
     
     /********************** RSVP **********************/
+    let validations = {
+        name : {
+            required: true,
+            min: 5,
+            message: "Por favor digite nombre completo."
+        },
+        email: {
+            required: true,
+            min: 10,
+            email: true,
+            message: "Digite un email valido."
+        },
+        number: {
+            required: true,
+            tel: true,
+            min: 10,
+            message: "Digite un numero valido."
+        }
+    };
+
+    updateValidations("#rsvp-form", validations);
+
     $.ajaxSetup({
         crossDomain: true
     });
 
-    //$('#rsvp-form button').click();
-
+    
     $("#rsvp-form").submit(function(e) {
         e.preventDefault();
-        $("#rsvp-form").validate(
-            {
-                rules: {
-                    name : {
-                        required: true,
-                        minlength: 5
-                      },
-                    email: {
-                        required: true,
-                        minlength: 10,
-                        email: true
-                      },
-                    number: {
-                        required: true,
-                        number: true,
-                        min: 10
-                      },
-                },
-                messages: {
-                    name: "Por favor digite nombre completo.",
-                    email: "Digite un email valido."
-    
-                },
-                submitHandler: submitHandler/*function(form) {
-                    $(form).ajaxSubmit();
-                }*/
-            }
-        );
-    });
+    });    
 
+    $('#rsvp-form button').click(submitHandler);
 });
+
+/***************** FORM VALIDATION *****************/
+function updateValidations(selector, validations) {
+    let inputs = Array.from(document.querySelectorAll(selector + " input"));
+    
+    for (let i of inputs) {
+        if (validations[i.name] == undefined) continue;
+
+        if (validations[i.name].required === true) {
+            i.required = true;
+        }
+
+        if (validations[i.name].tel === true) {
+            i.type = "tel";
+            i.pattern = "[0-9]{10}";
+        }
+
+        if (validations[i.name].number === true) {
+            i.type = "number";
+        }
+
+        if (validations[i.name].email === true) {
+            i.type = "email";
+        }
+
+        if (validations[i.name].min) {
+            i.min = "" + validations[i.name].min;
+        }
+
+        if (validations[i.name].max) {
+            i.max = "" + validations[i.name].max;
+        }
+
+        eval(`i.oninvalid = function(e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("${validations[i.name].message}");
+            }
+        }`);
+
+        i.oninput = function(e) {
+            e.target.setCustomValidity("");
+        };
+    }
+}
 
 /***************** FORM SUBMITION ******************/
 function submitHandler(e) {

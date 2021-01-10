@@ -375,7 +375,7 @@
                 <p>Estaríamos plenamente agradecidos que puedas hacer RSVP antes del 1ro de Febrero 2021.</p>
                 <form id="rsvp-form" class="rsvp-form"
                       action=""
-                      method="POST" novalidate>
+                      method="POST">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-input-group">
@@ -421,7 +421,7 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="number">
-                                    <i class="fa fa-phone"></i><input type="tel" name="number" class="" min="0"
+                                    <i class="fa fa-phone"></i><input type="tel" pattern="[0-9]{10}" name="number" class="" min="0"
                                                                     placeholder="Celular" id="fnumber"
                                                                     required>
                                 </div>
