@@ -1,34 +1,5 @@
 $(document).ready(function () {
     $('#intro-modal').appendTo("body").modal('show');
-
-    $("#rsvp-form").validate(
-        {
-            rules: {
-                name : {
-                    required: true,
-                    minlength: 5
-                  },
-                email: {
-                    required: true,
-                    minlength: 10,
-                    email: true
-                  },
-                number: {
-                    required: true,
-                    number: true,
-                    min: 10
-                  },
-            },
-            messages: {
-                name: "Por favor digite nombre completo.",
-                email: "Digite un email valido."
-
-            },
-            submitHandler: function(form) {
-                $(form).ajaxSubmit();
-            }
-        }
-    );
     
     /***************** Waypoints ******************/
 
@@ -101,7 +72,7 @@ $(document).ready(function () {
     /***************** Nav Transformicon ******************/
 
     /* When user clicks the Icon */
-    $('.nav-toggle').click(function () {
+    $('.nav-toggle').click(function (event) {
         $(this).toggleClass('active');
         $('.header-nav').toggleClass('open');
         event.preventDefault();
@@ -242,70 +213,102 @@ $(document).ready(function () {
         crossDomain: true
     });
 
-    $('#rsvp-form button').click( function (e) {
-        console.log($(this).attr("value"))
-        e.preventDefault();
-        var data = $('#rsvp-form').serialize();
+    //$('#rsvp-form button').click();
 
-        if ($(this).attr("value") == "enviar") { 
-            console.log("Data a enviar: "+data);
-            $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
-            $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
-                .done(function (data) {
-                    console.log("Data recibida: "+data);
-                    if (data.result == "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#rsvp-modal').modal('show');
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
-                });
-
-        }
-
-        if ($(this).attr("value") == "buscar") { 
-            //console.log("Data a enviar: "+data);
-            $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
-            var invite_code = $('#code').val()
-            $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
-                .done(function (data) {
-                    console.log("Data recibida: "+data);
-                    if (data.result == "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#name').show()
-                        $('#email').show()
-                        $('#number').show()
-                        $('#cupos').show()
-                        $('#enviar').show()
-                        $('#linea').hide()
-                        $('#fname').val(data.name)
-                        $('#femail').val(data.email)
-                        $('#fnumber').val(data.number)
-                        $('#fcupos').val(data.cupos)
-                        $('#flinea').val(data.linea)
-                        $('#fcupos').attr({
-                            "max" : data.cupos,        
-                            "min" : 1
-                         });
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> estamos presentando problemas con el servidor. '));
-                });
-
-        }
-
-
+    $("#rsvp-form").submit(function(event) {
+        $("#rsvp-form").validate(
+            {
+                rules: {
+                    name : {
+                        required: true,
+                        minlength: 5
+                      },
+                    email: {
+                        required: true,
+                        minlength: 10,
+                        email: true
+                      },
+                    number: {
+                        required: true,
+                        number: true,
+                        min: 10
+                      },
+                },
+                messages: {
+                    name: "Por favor digite nombre completo.",
+                    email: "Digite un email valido."
+    
+                },
+                submitHandler/*function(form) {
+                    $(form).ajaxSubmit();
+                }*/
+            }
+        );
     });
 
 });
+
+/***************** FORM SUBMITION ******************/
+function submitHandler(e) {
+    console.log($(this).attr("value"))
+    e.preventDefault();
+    var data = $('#rsvp-form').serialize();
+
+    if ($(this).attr("value") == "enviar") { 
+        console.log("Data a enviar: "+data);
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
+        $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
+            .done(function (data) {
+                console.log("Data recibida: "+data);
+                if (data.result == "error") {
+                    $('#alert-wrapper').html(alert_markup('danger', data.message));
+                } else {
+                    $('#alert-wrapper').html('');
+                    $('#rsvp-modal').modal('show');
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+            });
+
+    }
+
+    if ($(this).attr("value") == "buscar") { 
+        //console.log("Data a enviar: "+data);
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
+        var invite_code = $('#code').val()
+        $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
+            .done(function (data) {
+                console.log("Data recibida: "+data);
+                if (data.result == "error") {
+                    $('#alert-wrapper').html(alert_markup('danger', data.message));
+                } else {
+                    $('#alert-wrapper').html('');
+                    $('#name').show()
+                    $('#email').show()
+                    $('#number').show()
+                    $('#cupos').show()
+                    $('#enviar').show()
+                    $('#linea').hide()
+                    $('#fname').val(data.name)
+                    $('#femail').val(data.email)
+                    $('#fnumber').val(data.number)
+                    $('#fcupos').val(data.cupos)
+                    $('#flinea').val(data.linea)
+                    $('#fcupos').attr({
+                        "max" : data.cupos,        
+                        "min" : 1
+                     });
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> estamos presentando problemas con el servidor. '));
+            });
+
+    }
+}
 
 /********************** Extras **********************/
 
