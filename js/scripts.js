@@ -238,9 +238,8 @@ $(document).ready(function () {
     
     $("#rsvp-form").submit(function(e) {
         e.preventDefault();
-    });    
-
-    $('#rsvp-form button').click(submitHandler);
+        submitHandler($('#rsvp-form button'));
+    });
 });
 
 /***************** FORM VALIDATION *****************/
