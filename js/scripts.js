@@ -238,7 +238,7 @@ $(document).ready(function () {
     
     $("#rsvp-form").submit(function(e) {
         e.preventDefault();
-        submitHandler($('#rsvp-form button'));
+        submitHandler($('#rsvp-form button:visible'));
     });
 });
 
@@ -289,10 +289,10 @@ function updateValidations(selector, validations) {
 
 /***************** FORM SUBMITION ******************/
 function submitHandler(e) {
-    console.log($(this).attr("value"))
+    console.log($(e).attr("value"))
     var data = $('#rsvp-form').serialize();
 
-    if ($(this).attr("value") == "enviar") { 
+    if ($(e).attr("value") == "enviar") { 
         console.log("Data a enviar: "+data);
         $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
         $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
@@ -312,7 +312,7 @@ function submitHandler(e) {
 
     }
 
-    if ($(this).attr("value") == "buscar") { 
+    if ($(e).attr("value") == "buscar") { 
         //console.log("Data a enviar: "+data);
         $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
         var invite_code = $('#code').val()
@@ -365,6 +365,11 @@ $( "select" )
         $('#cupos').hide()
         $('#linea').hide()
         $('#enviar').hide()
+        $('#invite_code input')[0].required = true;
+        $('#name input')[0].required = false;
+        $('#email input')[0].required = false;
+        $('#number input')[0].required = false;
+        $('#cupos input')[0].required = false;
         $('#fname').val($(this).attr('placeholder'))
         $('#femail').val($(this).attr('placeholder'))
         $('#fnumber').val($(this).attr('placeholder'))
@@ -376,6 +381,11 @@ $( "select" )
         //$('#gran_contenedor').show()
         $('#cupos').hide()
         $('#linea').hide()
+        $('#invite_code input')[0].required = false;
+        $('#name input')[0].required = true;
+        $('#email input')[0].required = true;
+        $('#number input')[0].required = true;
+        $('#cupos input')[0].required = true;
         $('#name').show()
         $('#email').show()
         $('#number').show()
