@@ -322,7 +322,7 @@ function submitHandler(e) {
 
     if ($("#hiddenAction").val() == "buscar") { 
         //console.log("Data a enviar: "+data);
-        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos trabajando.'));
         var invite_code = $('#code').val()
         $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
             .done(function (data) {
