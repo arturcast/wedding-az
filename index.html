@@ -367,7 +367,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+<input type="text" style="display: none;" id="hiddenAction">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -406,30 +406,28 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="name">
                                     <i class="fa fa-user"></i><input name="name" class="" id="fname"
-                                                                    placeholder="Tu nombre"
-                                                                    required>
+                                                                    placeholder="Tu nombre">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="email">
                                     <i class="fa fa-envelope"></i><input type="email" name="email" class=""
                                                                         placeholder="Tu email" id="femail"
-                                                                        required>
+>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="number">
-                                    <i class="fa fa-phone"></i><input type="number" name="number" class="" min="0"
-                                                                    placeholder="Celular" id="fnumber"
-                                                                    required>
+                                    <i class="fa fa-phone"></i><input type="tel" pattern="[0-9]{10}" name="number" class="" min="0"
+                                                                    placeholder="Celular" id="fnumber">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="cupos">
                                     <i class="fa fa-users"></i><input type="number" name="cupos" class="" min="1"
-                                                                    id="fcupos" disabled="disabled">
+                                                                    id="fcupos">
                                 </div>
                             </div>
                         </div>

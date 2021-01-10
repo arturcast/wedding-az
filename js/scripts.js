@@ -1,34 +1,13 @@
 $(document).ready(function () {
+    $('button[value="enviar"]').click(function() {
+        $('#hiddenAction').val('enviar');
+    });
+
+    $('button[value="buscar"]').click(function() {
+        $('#hiddenAction').val('buscar');
+    });
+
     $('#intro-modal').appendTo("body").modal('show');
-
-    $("#rsvp-form").validate(
-        {
-            rules: {
-                name : {
-                    required: true,
-                    minlength: 5
-                  },
-                email: {
-                    required: true,
-                    minlength: 10,
-                    email: true
-                  },
-                number: {
-                    required: true,
-                    number: true,
-                    min: 10
-                  },
-            },
-            messages: {
-                name: "Por favor digite nombre completo.",
-                email: "Digite un email valido."
-
-            },
-            submitHandler: function(form) {
-                $(form).ajaxSubmit();
-            }
-        }
-    );
     
     /***************** Waypoints ******************/
 
@@ -101,7 +80,7 @@ $(document).ready(function () {
     /***************** Nav Transformicon ******************/
 
     /* When user clicks the Icon */
-    $('.nav-toggle').click(function () {
+    $('.nav-toggle').click(function (event) {
         $(this).toggleClass('active');
         $('.header-nav').toggleClass('open');
         event.preventDefault();
@@ -238,74 +217,145 @@ $(document).ready(function () {
 
     
     /********************** RSVP **********************/
+    let validations = {
+        name : {
+            required: true,
+            min: 5,
+            message: "Por favor digite nombre completo."
+        },
+        email: {
+            required: true,
+            min: 10,
+            email: true,
+            message: "Digite un email valido."
+        },
+        number: {
+            required: true,
+            tel: true,
+            min: 10,
+            message: "Digite un numero valido."
+        }
+    };
+
+    updateValidations("#rsvp-form", validations);
+
     $.ajaxSetup({
         crossDomain: true
     });
 
-    $('#rsvp-form button').click( function (e) {
-        console.log($(this).attr("value"))
+    
+    $("#rsvp-form").submit(function(e) {
         e.preventDefault();
-        var data = $('#rsvp-form').serialize();
-
-        if ($(this).attr("value") == "enviar") { 
-            console.log("Data a enviar: "+data);
-            $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
-            $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
-                .done(function (data) {
-                    console.log("Data recibida: "+data);
-                    if (data.result == "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#rsvp-modal').modal('show');
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
-                });
-
-        }
-
-        if ($(this).attr("value") == "buscar") { 
-            //console.log("Data a enviar: "+data);
-            $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
-            var invite_code = $('#code').val()
-            $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
-                .done(function (data) {
-                    console.log("Data recibida: "+data);
-                    if (data.result == "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#name').show()
-                        $('#email').show()
-                        $('#number').show()
-                        $('#cupos').show()
-                        $('#enviar').show()
-                        $('#linea').hide()
-                        $('#fname').val(data.name)
-                        $('#femail').val(data.email)
-                        $('#fnumber').val(data.number)
-                        $('#fcupos').val(data.cupos)
-                        $('#flinea').val(data.linea)
-                        $('#fcupos').attr({
-                            "max" : data.cupos,        
-                            "min" : 1
-                         });
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> estamos presentando problemas con el servidor. '));
-                });
-
-        }
-
-
+        submitHandler($('#rsvp-form button:visible'));
     });
-
 });
+
+/***************** FORM VALIDATION *****************/
+function updateValidations(selector, validations) {
+    let inputs = Array.from(document.querySelectorAll(selector + " input"));
+    
+    for (let i of inputs) {
+        if (validations[i.name] == undefined) continue;
+
+        if (validations[i.name].required === true) {
+            i.required = true;
+        }
+
+        if (validations[i.name].tel === true) {
+            i.type = "tel";
+            i.pattern = "[0-9]{10}";
+        }
+
+        if (validations[i.name].number === true) {
+            i.type = "number";
+        }
+
+        if (validations[i.name].email === true) {
+            i.type = "email";
+        }
+
+        if (validations[i.name].min) {
+            i.min = "" + validations[i.name].min;
+        }
+
+        if (validations[i.name].max) {
+            i.max = "" + validations[i.name].max;
+        }
+
+        eval(`i.oninvalid = function(e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("${validations[i.name].message}");
+            }
+        }`);
+
+        i.oninput = function(e) {
+            e.target.setCustomValidity("");
+        };
+    }
+}
+
+/***************** FORM SUBMITION ******************/
+function submitHandler(e) {
+    console.log($(e).attr("value"))
+    var data = $('#rsvp-form').serialize();
+
+    if ($("#hiddenAction").val() == "enviar") { 
+        console.log("Data a enviar: "+data);
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
+        $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
+            .done(function (data) {
+                console.log("Data recibida: "+data);
+                if (data.result == "error") {
+                    $('#alert-wrapper').html(alert_markup('danger', data.message));
+                } else {
+                    $('#alert-wrapper').html('');
+                    $('#rsvp-modal').modal('show');
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+            });
+
+    }
+
+    if ($("#hiddenAction").val() == "buscar") { 
+        //console.log("Data a enviar: "+data);
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
+        var invite_code = $('#code').val()
+        $.get('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec?code='+invite_code)
+            .done(function (data) {
+                console.log("Data recibida: "+data);
+                if (data.result == "error") {
+                    $('#alert-wrapper').html(alert_markup('danger', data.message));
+                } else {
+                    $('#alert-wrapper').html('');
+                    $('#name').show()
+                    $('#email').show()
+                    $('#number').show()
+                    $('#cupos').show()
+                    $('#enviar').show()
+                    $('#linea').hide()
+                    $('#fname').val(data.name)
+                    $('#femail').val(data.email)
+                    $('#fnumber').val(data.number)
+                    $('#fcupos')[0].required = true;
+                    $('#fcupos').val(data.cupos)
+                    $('#flinea').val(data.linea)
+                    $('#fcupos').attr({
+                        "max" : data.cupos,        
+                        "min" : 1
+                     });
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> estamos presentando problemas con el servidor. '));
+            });
+
+    }
+}
 
 /********************** Extras **********************/
 
@@ -324,6 +374,11 @@ $( "select" )
         $('#cupos').hide()
         $('#linea').hide()
         $('#enviar').hide()
+        $('#invite_code input')[0].required = true;
+        $('#name input')[0].required = false;
+        $('#email input')[0].required = false;
+        $('#number input')[0].required = false;
+        $('#fcupos')[0].required = false;
         $('#fname').val($(this).attr('placeholder'))
         $('#femail').val($(this).attr('placeholder'))
         $('#fnumber').val($(this).attr('placeholder'))
@@ -335,6 +390,11 @@ $( "select" )
         //$('#gran_contenedor').show()
         $('#cupos').hide()
         $('#linea').hide()
+        $('#invite_code input')[0].required = false;
+        $('#name input')[0].required = true;
+        $('#email input')[0].required = true;
+        $('#number input')[0].required = true;
+        $('#fcupos')[0].required = false;
         $('#name').show()
         $('#email').show()
         $('#number').show()
