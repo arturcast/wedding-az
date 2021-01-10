@@ -340,6 +340,7 @@ function submitHandler(e) {
                     $('#fname').val(data.name)
                     $('#femail').val(data.email)
                     $('#fnumber').val(data.number)
+                    $('#fcupos')[0].required = true;
                     $('#fcupos').val(data.cupos)
                     $('#flinea').val(data.linea)
                     $('#fcupos').attr({
@@ -377,7 +378,7 @@ $( "select" )
         $('#name input')[0].required = false;
         $('#email input')[0].required = false;
         $('#number input')[0].required = false;
-        $('#cupos input')[0].required = false;
+        $('#fcupos')[0].required = false;
         $('#fname').val($(this).attr('placeholder'))
         $('#femail').val($(this).attr('placeholder'))
         $('#fnumber').val($(this).attr('placeholder'))
@@ -393,7 +394,7 @@ $( "select" )
         $('#name input')[0].required = true;
         $('#email input')[0].required = true;
         $('#number input')[0].required = true;
-        $('#cupos input')[0].required = true;
+        $('#fcupos')[0].required = false;
         $('#name').show()
         $('#email').show()
         $('#number').show()
