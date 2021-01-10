@@ -347,6 +347,10 @@ function submitHandler(e) {
                         "max" : data.cupos,        
                         "min" : 1
                      });
+                     $('#name input')[0].required = true;
+                     $('#email input')[0].required = true;
+                     $('#number input')[0].required = true;
+                     $('#cupos input')[0].required = true;
                 }
             })
             .fail(function (data) {
