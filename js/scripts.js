@@ -302,7 +302,7 @@ function submitHandler(e) {
 
     if ($("#hiddenAction").val() == "enviar") { 
         console.log("Data a enviar: "+data);
-        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos buscando.'));
+        $('#alert-wrapper').html(alert_markup('info', '<strong>Espere unos segundos!</strong> estamos trabajando.'));
         $.post('https://script.google.com/macros/s/AKfycbw4RlhY2wZ3Xer8L2Akp1HeYoaYSREi2sa6PKfxK9NUAb34gMocOJ4PaQ/exec', data)
             .done(function (data) {
                 console.log("Data recibida: "+data);
@@ -315,7 +315,7 @@ function submitHandler(e) {
             })
             .fail(function (data) {
                 console.log(data);
-                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+                $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> estamos presentando problemas con el servidor. '));
             });
 
     }
