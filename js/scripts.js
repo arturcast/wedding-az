@@ -203,10 +203,12 @@ $(document).ready(function () {
 
             // You can also choose to set an end time
             // If an end time is set, this will take precedence over duration
-            end: new Date('Feb 21, 2021 02:00'),
+            end: new Date('Feb 20, 2021 23:59'),
 
             // Event Address
             address: 'Parroquia Santa Teresita del niño Jesus',
+
+            text: 'AGREGAR A CALENDARIO',
 
             // Event Description
             description: "No podemos esperar a verte en nuestro gran día. Para cualquier pregunta o inquietud, por favor contacta con los novios."
