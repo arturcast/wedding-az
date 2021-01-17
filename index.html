@@ -417,6 +417,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="email">
                                     <i class="fa fa-envelope"></i><input type="email" name="email" class=""
+                                    pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
                                                                         placeholder="Tu email" id="femail"
 >
                                 </div>
@@ -425,7 +426,7 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-input-group" id="number">
-                                    <i class="fa fa-phone"></i><input type="tel" pattern="[0-9]{10}" name="number" class="" min="0"
+                                    <i class="fa fa-phone"></i><input type="tel" pattern="[0-9]{10,15}" name="number" class="" min="0"
                                                                     placeholder="Celular" id="fnumber">
                                 </div>
                             </div>
